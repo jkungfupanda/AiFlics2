@@ -17,34 +17,39 @@ function onSubmit(e) {
 
 async function generateImageRequest(prompt, size) {
   try {
-    showSpinner();
+      showSpinner();
 
-    const response = await fetch('/openai/generateimage', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        prompt,
-        size,
-      }),
-    });
+      const response = await fetch('/openai/generateimage', {
+          method: 'POST',
+          headers: {
+              'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+              prompt,
+              size,
+          }),
+      });
 
-    if (!response.ok) {
+      if (!response.ok) {
+          removeSpinner();
+          throw new Error('That image could not be generated');
+      }
+
+      const data = await response.json();
+      // console.log(data);
+
+      const imageUrl = data.data;
+
+      // const smallImageUrl = imageUrl + '?size=256x256' // this will return the image with size 256x256
+
+      document.querySelector('#image').src = imageUrl;
+
+      document.querySelector('#image-overlay').src = imageUrl;
+
+
       removeSpinner();
-      throw new Error('That image could not be generated');
-    }
-
-    const data = await response.json();
-    // console.log(data);
-
-    const imageUrl = data.data;
-
-    document.querySelector('#image').src = imageUrl;
-
-    removeSpinner();
   } catch (error) {
-    document.querySelector('.msg').textContent = error;
+      document.querySelector('.msg').textContent = error;
   }
 }
 
