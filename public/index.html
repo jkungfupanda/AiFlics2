@@ -8,6 +8,9 @@
     <link rel="stylesheet" href="css/spinner.css" />
 
     <script src="js/main.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.5.0-beta4/html2canvas.js"></script>
+
+
     <title>OpenAI Image Generator</title>
   </head>
   <body>
@@ -35,6 +38,7 @@
           <div class="form-control">
             <input type="text" id="prompt" placeholder="Enter Text" />
           </div>
+          
           <!-- size -->
           <div class="form-control">
             <select name="size" id="size">
@@ -43,7 +47,7 @@
               <option value="large">Large</option>
             </select>
           </div>
-          <button type="submit" class="btn">Generate</button>
+          <button type="submit" class="btn" id="btn" onclick="enableDownload()">Generate</button>
         </form>
       </section>
 
@@ -53,11 +57,12 @@
                 <h2 class="msg"></h2>
                 <img src="" alt="" id="image" />
             </div>
-            <div class="tshirt-container column">
-              <img src="t-shirt.jpg" alt="T-Shirt" id = "t-shirt" class="tshirt-image">
-                <img src="" alt="" id="image-overlay" class="image-overlay" style="position: absolute; top: 0; left: 0;">
+            <div class="tshirt-container column" id="tshirt-container">
+                <img src="t-shirt.jpg" alt="T-Shirt" id = "t-shirt" class="tshirt-image">
+                <img src="" alt="" id="image-overlay" class="image-overlay">
             </div>
         </div>
+        <button onclick="downloadimage()" id="download" disabled="true">Download Image</button>
     </section>
     
     </main>

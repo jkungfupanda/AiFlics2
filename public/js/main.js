@@ -43,7 +43,6 @@ async function generateImageRequest(prompt, size) {
       // const smallImageUrl = imageUrl + '?size=256x256' // this will return the image with size 256x256
 
       document.querySelector('#image').src = imageUrl;
-
       document.querySelector('#image-overlay').src = imageUrl;
 
 
@@ -62,3 +61,24 @@ function removeSpinner() {
 }
 
 document.querySelector('#image-form').addEventListener('submit', onSubmit);
+
+
+function enableDownload() {
+  document.getElementById("download").disabled = false;
+}
+
+function downloadimage() {
+  const image1 = new Image();
+  image1.src = "t-shirt.jpg";
+  const image2 = new Image();
+  image2.src = "image-overlay.jpg";
+  
+  Promise.all([image1, image2]).then(() => {
+      html2canvas(document.getElementById("tshirt-container")).then(function(canvas) {
+          var link = document.createElement("a");
+          link.download = "image.png";
+          link.href = canvas.toDataURL("image/png").replace("image/png", "image/octet-stream");
+          link.click();
+      });
+  });
+}
